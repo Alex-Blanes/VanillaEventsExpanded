@@ -24,7 +24,7 @@ namespace VEE
             GUI.color = new Color(1f, 1f, 1f, 0.8f);
             Map map = Find.CurrentMap;
             MapComp_Drought mapComp_Drought = map.GetComponent<MapComp_Drought>();
-            if (mapComp_Drought != null && map.GetComponent<MapComp_Drought>().droughtGoingOn)
+            if (mapComp_Drought != null && mapComp_Drought.droughtGoingOn)
             {
                 if (cell.GetTerrain(map).fertility > 0)
                 {
@@ -61,15 +61,9 @@ namespace VEE
         {
             if (___map != null && HarmonyInit.mapCompDrought != null)
             {
-                MapComp_Drought mapComp_Drought;
-                if (HarmonyInit.mapCompDrought.ContainsKey(___map) && HarmonyInit.mapCompDrought.TryGetValue(___map) != null)
+                if (HarmonyInit.mapCompDrought.TryGetValue(___map, out var mapComp_Drought) is false)
                 {
-                    mapComp_Drought = HarmonyInit.mapCompDrought.TryGetValue(___map);
-                }
-                else
-                {
-                    mapComp_Drought = ___map.GetComponent<MapComp_Drought>();
-                    HarmonyInit.mapCompDrought.Add(___map, mapComp_Drought);
+                    HarmonyInit.mapCompDrought[___map] = mapComp_Drought = ___map.GetComponent<MapComp_Drought>();
                 }
 
                 if (mapComp_Drought != null && mapComp_Drought.droughtGoingOn)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using RimWorld;
@@ -64,7 +64,7 @@ namespace VEE
             {
                 var p = allPawns[i];
                 if (p.Faction == null && !p.RaceProps.DeathActionWorker.DangerousInMelee && !p.IsWildMan() && !p.IsPrisoner
-                    && map.reachability.CanReach(entryCell, (LocalTargetInfo) p, PathEndMode.OnCell, TraverseMode.NoPassClosedDoors))
+                    && map.reachability.CanReach(entryCell, (LocalTargetInfo)p, PathEndMode.OnCell, TraverseMode.NoPassClosedDoors))
                 {
                     if (faction.def.techLevel >= TechLevel.Industrial && p.RaceProps.manhunterOnDamageChance <= 0.5f)
                         huntTargets.Add(p);
@@ -85,7 +85,7 @@ namespace VEE
         private bool TryFindFaction(out Faction faction)
         {
             List<Faction> factions = Find.FactionManager.AllFactions.ToList().FindAll(f => f != Faction.OfPlayer && !f.HostileTo(Faction.OfPlayer) && !f.Hidden && !f.defeated && f.def.techLevel >= TechLevel.Neolithic);
-            if (ModLister.IdeologyInstalled && ModsConfig.IdeologyActive) factions.RemoveAll(f => f.ideos.HasAnyIdeoWithMeme(VEE_DefOf.AnimalPersonhood));
+            if (ModLister.IdeologyInstalled && ModsConfig.IdeologyActive) factions.RemoveAll(f => f.ideos != null && f.ideos.HasAnyIdeoWithMeme(VEE_DefOf.AnimalPersonhood));
             faction = factions.RandomElement();
 
             if (faction != null) return true;
