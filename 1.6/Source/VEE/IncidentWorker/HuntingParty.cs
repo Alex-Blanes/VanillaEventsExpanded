@@ -17,7 +17,8 @@ namespace VEE
         protected override bool CanFireNowSub(IncidentParms parms)
         {
             Map map = (Map)parms.target;
-
+            entryCell = IntVec3.Invalid;
+            faction = null;
             return base.CanFireNowSub(parms)
                    && !map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout)
                    && TryFindEntryCell(map, out entryCell)
@@ -27,6 +28,7 @@ namespace VEE
 
         protected override bool TryExecuteWorker(IncidentParms parms)
         {
+            if (faction is null || entryCell.IsValid is false) return false;
             var map = (Map)parms.target;
             // Spawn hunters
             var lordPawns = new List<Pawn>();
